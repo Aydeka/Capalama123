@@ -1,0 +1,17 @@
+{
+  "name": "Capalama",
+  "short_name": "Capalama",
+  "description": "Генератор цветовых палитр с сохранением и экспортом в PNG.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0F172A",
+  "theme_color": "#0F172A",
+  "icons": [
+    {
+      "src": "./assets/icons/favicon.svg",
+      "sizes": "64x64",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
