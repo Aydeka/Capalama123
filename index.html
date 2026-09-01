@@ -66,6 +66,177 @@
             </button>
           </div>
 
+          <section class="planner-panel" id="plannerPanel" aria-labelledby="plannerTitle">
+            <div class="planner-header">
+              <p class="eyebrow" data-i18n="plannerEyebrow">Помощник по планировке</p>
+              <h2 id="plannerTitle" data-i18n="plannerTitle">Подбор комнаты по площади</h2>
+            </div>
+
+            <div class="planner-form">
+              <label class="field">
+                <span data-i18n="roomAreaLabel">Площадь, м²</span>
+                <input id="roomArea" type="number" min="10" max="250" step="1" value="42" />
+              </label>
+
+              <label class="field">
+                <span data-i18n="roomTypeLabel">Тип помещения</span>
+                <select id="roomType">
+                  <option value="apartment" data-i18n-room="apartment">Квартира</option>
+                  <option value="studio" data-i18n-room="studio">Студия</option>
+                  <option value="kitchen" data-i18n-room="kitchen">Кухня</option>
+                  <option value="living" data-i18n-room="living">Гостиная</option>
+                  <option value="house" data-i18n-room="house">Дом</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span data-i18n="roomStyleLabel">Стиль</span>
+                <select id="roomStyle">
+                  <option value="scandi" data-i18n-style="scandi">Сканди</option>
+                  <option value="loft" data-i18n-style="loft">Лофт</option>
+                  <option value="minimalism" data-i18n-style="minimalism">Минимализм</option>
+                  <option value="warm" data-i18n-style="warm">Тёплый</option>
+                  <option value="modern" data-i18n-style="modern">Современный</option>
+                </select>
+              </label>
+
+              <button class="button button--primary planner-button" id="plannerBtn" type="button">
+                <span aria-hidden="true">🧭</span>
+                <span data-i18n="plannerButton">Собрать план</span>
+              </button>
+            </div>
+
+            <nav class="planner-window-switcher" aria-label="Окна планировщика">
+              <button class="planner-window-switcher__button is-active" type="button" data-planner-window="summary" aria-selected="true">
+                <span class="planner-window-switcher__icon" aria-hidden="true">▦</span>
+                <span data-i18n="summaryWindow">Сводка</span>
+              </button>
+              <button class="planner-window-switcher__button" type="button" data-planner-window="furniture" aria-selected="false">
+                <span class="planner-window-switcher__icon" aria-hidden="true">⌂</span>
+                <span data-i18n="furnitureWindow">Мебель</span>
+              </button>
+              <button class="planner-window-switcher__button" type="button" data-planner-window="plan" aria-selected="false">
+                <span class="planner-window-switcher__icon" aria-hidden="true">⌗</span>
+                <span data-i18n="planWindow">Схема</span>
+              </button>
+            </nav>
+
+            <div class="planner-results" id="plannerResults" aria-live="polite">
+              <div class="planner-window-card planner-window-card--summary is-active" data-planner-window-panel="summary">
+                <div class="planner-window-card__header">
+                  <span class="planner-window-card__dots" aria-hidden="true">
+                    <span class="planner-window-card__dot planner-window-card__dot--red"></span>
+                    <span class="planner-window-card__dot planner-window-card__dot--yellow"></span>
+                    <span class="planner-window-card__dot planner-window-card__dot--green"></span>
+                  </span>
+                  <h3 class="planner-window-card__title">Сводка</h3>
+                </div>
+                <div class="planner-summary" id="plannerSummary"></div>
+              </div>
+
+              <div class="planner-window-card planner-window-card--furniture" data-planner-window-panel="furniture">
+                <div class="planner-window-card__header">
+                  <span class="planner-window-card__dots" aria-hidden="true">
+                    <span class="planner-window-card__dot planner-window-card__dot--red"></span>
+                    <span class="planner-window-card__dot planner-window-card__dot--yellow"></span>
+                    <span class="planner-window-card__dot planner-window-card__dot--green"></span>
+                  </span>
+                  <h3 class="planner-window-card__title">Мебель</h3>
+                </div>
+                <div class="planner-size-panel">
+                  <div class="planner-size-header">
+                    <h3 data-i18n="sizeTitle">Размеры мебели</h3>
+                    <button class="button button--secondary planner-add-furniture" id="openFurnitureModalBtn" type="button">
+                      <span aria-hidden="true">＋</span>
+                      <span data-i18n="addItem">Добавить</span>
+                    </button>
+                  </div>
+
+                  <div class="planner-dimensions">
+                    <label class="field">
+                      <span data-i18n="roomWidthLabel">Ширина комнаты, м</span>
+                      <input id="roomWidth" type="number" min="2" max="20" step="0.1" value="4.5" />
+                    </label>
+
+                    <label class="field">
+                      <span data-i18n="roomDepthLabel">Глубина комнаты, м</span>
+                      <input id="roomDepth" type="number" min="2" max="20" step="0.1" value="5.5" />
+                    </label>
+                  </div>
+
+                  <div class="planner-fit" id="plannerFit"></div>
+
+                  <div class="planner-panel-actions">
+                    <button class="button button--primary" id="savePlanBtn" type="button">
+                      <span aria-hidden="true">💾</span>
+                      <span data-i18n="save">Сохранить план</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="planner-saved-panel">
+                  <div class="planner-saved-header">
+                    <h3>Сохранённые планы</h3>
+                  </div>
+                  <div class="planner-saved-list" id="savedPlansList" aria-live="polite"></div>
+                </div>
+              </div>
+
+              <div class="planner-furniture-modal" id="plannerFurnitureModal" aria-hidden="true">
+                <div class="planner-furniture-window" role="dialog" aria-modal="true" aria-labelledby="plannerFurnitureTitle">
+                  <div class="planner-window-header">
+                    <h3 id="plannerFurnitureTitle" data-i18n="sizeTitle">Размеры мебели</h3>
+                    <button class="planner-window-close" id="closeFurnitureModalBtn" type="button" aria-label="Close">×</button>
+                  </div>
+                  <div class="planner-furniture-list" id="plannerFurnitureList"></div>
+                  <div class="planner-window-actions">
+                    <button class="button button--secondary" id="addFurnitureBtn" type="button">
+                      <span aria-hidden="true">＋</span>
+                      <span data-i18n="addItem">Добавить</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="planner-window-card planner-window-card--plan" data-planner-window-panel="plan">
+                <div class="planner-window-card__header">
+                  <span class="planner-window-card__dots" aria-hidden="true">
+                    <span class="planner-window-card__dot planner-window-card__dot--red"></span>
+                    <span class="planner-window-card__dot planner-window-card__dot--yellow"></span>
+                    <span class="planner-window-card__dot planner-window-card__dot--green"></span>
+                  </span>
+                  <h3 class="planner-window-card__title">План</h3>
+                </div>
+                <div class="planner-section">
+                  <h3 data-i18n="zonesTitle">Зонирование</h3>
+                  <div class="planner-zones" id="plannerZones"></div>
+                </div>
+                <div class="planner-section">
+                  <h3 data-i18n="paletteTitle">Палитра</h3>
+                  <div class="planner-palette" id="plannerPalette"></div>
+                </div>
+                <div class="planner-section">
+                  <h3 data-i18n="layoutTitle">Схема расстановки</h3>
+                  <div class="planner-layout" id="plannerLayout"></div>
+                </div>
+                <div class="planner-section planner-grid">
+                  <div>
+                    <h3 data-i18n="materialsTitle">Материалы</h3>
+                    <ul class="planner-list" id="plannerMaterials"></ul>
+                  </div>
+                  <div>
+                    <h3 data-i18n="shoppingTitle">Что купить</h3>
+                    <ul class="planner-list" id="plannerShopping"></ul>
+                  </div>
+                </div>
+                <div class="planner-section">
+                  <h3 data-i18n="budgetTitle">Краткая смета</h3>
+                  <div class="planner-budget" id="plannerBudget"></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
           <section class="palette" id="palette" data-i18n-aria="paletteAria" aria-label="Текущая цветовая палитра"></section>
 
           <div class="actions" data-i18n-aria="actionsAria" aria-label="Действия с палитрой">
