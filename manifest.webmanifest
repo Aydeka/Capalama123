@@ -1,7 +1,7 @@
 {
   "name": "Capalama",
   "short_name": "Capalama",
-  "description": "Генератор цветовых палитр с сохранением и экспортом в PNG.",
+  "description": "Генератор палитр и помощник по предварительному планированию интерьера.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0F172A",
